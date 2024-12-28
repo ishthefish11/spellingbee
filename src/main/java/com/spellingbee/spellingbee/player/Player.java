@@ -1,21 +1,19 @@
-package com.spellingbee.spellingbee.user;
+package com.spellingbee.spellingbee.player;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class User implements Serializable {
+@Table(name = "\"Player\"") // Escapes the table name
+public class Player implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
-    private String username;
+    private Long playerId;
+    private String playername;
     private String email;
     private int highScore;
     private List<String> wordsLostTo;
@@ -24,8 +22,8 @@ public class User implements Serializable {
     private long lastLoginTimestamp;
     private long accountCreationTimestamp;
 
-    public User(String username, String email) {
-        this.username = username;
+    public Player(String playername, String email) {
+        this.playername = playername;
         this.email = email;
         this.highScore = 0;
         this.wordsLostTo = new ArrayList<>();
@@ -35,12 +33,12 @@ public class User implements Serializable {
         this.lastLoginTimestamp = System.currentTimeMillis();
     }
 
-    public String getUsername() {
-        return username;
+    public String getPlayerName() {
+        return playername;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setPlayerName(String playerName) {
+        this.playername = playername;
     }
 
     public void updateHighScore(int newScore) {

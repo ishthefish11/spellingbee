@@ -1,10 +1,10 @@
 package com.spellingbee.spellingbee.game;
 
+import com.spellingbee.spellingbee.player.Player;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import com.spellingbee.spellingbee.user.User;
 
 @Entity
 public class Game {
@@ -12,7 +12,7 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long GAME_SESSION_ID;
     private String word;
-    private User user;
+    private Player player;
     private int score;
     private boolean active;
 
@@ -34,12 +34,12 @@ public class Game {
         this.word = word;
     }
 
-    public User getUser() {
-        return user;
+    public Player getUser() {
+        return player;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Player player) {
+        this.player = player;
     }
 
     public int getScore() {

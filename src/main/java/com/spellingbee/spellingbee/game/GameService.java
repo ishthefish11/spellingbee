@@ -1,6 +1,6 @@
 package com.spellingbee.spellingbee.game;
 
-import com.spellingbee.spellingbee.user.User;
+import com.spellingbee.spellingbee.player.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,14 +9,14 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import org.json.JSONObject;
-import com.spellingbee.spellingbee.user.UserService;
+import com.spellingbee.spellingbee.player.PlayerService;
 
 @Service
 public class GameService {
     @Autowired
     GameRepository gameRepository;
     @Autowired
-    UserService userService;
+    PlayerService playerService;
 
     public String getRandomWord() {
         String url = "https://api.api-ninjas.com/v1/randomword";
@@ -78,11 +78,11 @@ public class GameService {
         if (!game.getWord().equals(word)) {
             flag = false;
             game.endGame();
-            User user = game.getUser();
-            user.addNewScore(game.getScore());
-            user.incrementGamesPlayed();
-            user.addWordLostTo(game.getWord());
-            user.updateHighScore(game.getScore());
+            Player player = game.getUser();
+            player.addNewScore(game.getScore());
+            player.incrementGamesPlayed();
+            player.addWordLostTo(game.getWord());
+            player.updateHighScore(game.getScore());
         }
         return flag;
     }
