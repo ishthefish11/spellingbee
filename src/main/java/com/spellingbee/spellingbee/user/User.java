@@ -21,8 +21,6 @@ public class User implements Serializable {
     private List<String> wordsLostTo;
     private List<Integer> lastTenScores;
     private int totalGamesPlayed;
-    private int totalGamesWon;
-    private int totalGamesLost;
     private long lastLoginTimestamp;
     private long accountCreationTimestamp;
 
@@ -33,12 +31,9 @@ public class User implements Serializable {
         this.wordsLostTo = new ArrayList<>();
         this.lastTenScores = new ArrayList<>();
         this.totalGamesPlayed = 0;
-        this.totalGamesWon = 0;
-        this.totalGamesLost = 0;
         this.accountCreationTimestamp = System.currentTimeMillis();
         this.lastLoginTimestamp = System.currentTimeMillis();
     }
-
 
     public String getUsername() {
         return username;
@@ -60,21 +55,13 @@ public class User implements Serializable {
 
     public void addNewScore(int score) {
         if (this.lastTenScores.size() >= 10) {
-            this.lastTenScores.removeFirst(); // Remove the oldest score to maintain the size
+            this.lastTenScores.removeFirst();
         }
         this.lastTenScores.add(score);
     }
 
     public void incrementGamesPlayed() {
         this.totalGamesPlayed++;
-    }
-
-    public void incrementGamesWon() {
-        this.totalGamesWon++;
-    }
-
-    public void incrementGamesLost() {
-        this.totalGamesLost++;
     }
 
     public void updateLastLoginTimestamp() {

@@ -1,5 +1,6 @@
 package com.spellingbee.spellingbee.game;
 
+import com.spellingbee.spellingbee.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +40,8 @@ public class GameService {
         return word;
     }
 
-    public String getWordDefinition(String word) {
+    public String getWordDefinition(Long id) {
+        String word = gameRepository.findById(id).get().getWord();
         String firstDefinition = null;
         String url = "https://api.dictionaryapi.dev/api/v2/entries/en/" + word;
         HttpClient client = HttpClient.newHttpClient();
@@ -55,23 +57,33 @@ public class GameService {
         catch (Exception e) {
             e.printStackTrace();
         }
-
         return firstDefinition;
     }
 
     public Game startGame(Long userId) {
-        Game game = new Game(getRandomWord(), userId); // Create a new game
-        return gameRepository.save(game); // Save to the database
+        Game game = new Game(getRandomWord(), userId);
+        return gameRepository.save(game);
     }
 
-    public void updateGame(Long id, int score) {
+    public Game advanceInGame(Long id) {
         Game game = gameRepository.findById(id).get();
-        game.setScore(score);
-        gameRepository.save(game);
+        game.setWord(getRandomWord());
+        game.setScore(game.getScore() + 1);
+        return gameRepository.save(game);
     }
 
     public boolean checkWord(Long id, String word) {
+        boolean flag = true;
         Game game = gameRepository.findById(id).get();
-        return game.getWord().equals(word);
+        if (!game.getWord().equals(word)) {
+            flag = false;
+            game.endGame();
+            User user = game.getUser();
+            user.addNewScore(game.getScore());
+            user.incrementGamesPlayed();
+            user.addWordLostTo(game.getWord());
+            user.updateHighScore(game.getScore());
+        }
+        return flag;
     }
 }

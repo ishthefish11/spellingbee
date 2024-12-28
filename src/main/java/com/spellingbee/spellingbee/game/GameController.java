@@ -1,9 +1,7 @@
 package com.spellingbee.spellingbee.game;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class GameController {
@@ -11,10 +9,9 @@ public class GameController {
     private GameService gameService;
 
     @GetMapping("/play")
-    public String startGame() {
-        String r = gameService.getRandomWord();
-        System.out.println(r);
-        return r;
+    public Long startGame(@RequestParam Long userId) {
+        Game game = gameService.startGame(userId);
+        return game.getGameId();
     }
 
     @GetMapping("/play/{id}/check-word/{word}")
@@ -22,4 +19,13 @@ public class GameController {
         return gameService.checkWord(id, word);
     }
 
+    @GetMapping("/play/{id}/definition")
+    public String getWordDefinition(@PathVariable Long id) {
+        return gameService.getWordDefinition(id);
+    }
+
+    @GetMapping("/play/{id}")
+    public Game advanceInGame(@PathVariable Long id) {
+        return gameService.advanceInGame(id);
+    }
 }

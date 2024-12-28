@@ -29,4 +29,9 @@ public class UserController {
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
     }
+
+    @PutMapping("/users/{id}")
+    public void updateLoggedInTimestamp(@PathVariable Long id) {
+        userService.getUser(id).updateLastLoginTimestamp();
+    }
 }
