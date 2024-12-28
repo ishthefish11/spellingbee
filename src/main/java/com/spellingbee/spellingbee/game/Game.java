@@ -16,7 +16,7 @@ public class Game {
     private int score;
     private boolean active;
 
-    public Game(String word, Long userId) {
+    public Game(String word, Long playerId) {
         score = 0;
         this.word = word;
         active = true;
@@ -34,11 +34,11 @@ public class Game {
         this.word = word;
     }
 
-    public Player getUser() {
+    public Player getPlayer() {
         return player;
     }
 
-    public void setUser(Player player) {
+    public void setPlayer(Player player) {
         this.player = player;
     }
 

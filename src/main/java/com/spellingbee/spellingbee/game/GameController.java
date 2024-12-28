@@ -8,9 +8,9 @@ public class GameController {
     @Autowired
     private GameService gameService;
 
-    @GetMapping("/play")
-    public Long startGame(@RequestParam Long userId) {
-        Game game = gameService.startGame(userId);
+    @PostMapping("/play")
+    public Long startGame(@RequestParam Long playerId) {
+        Game game = gameService.startGame(playerId);
         return game.getGameId();
     }
 

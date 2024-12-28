@@ -60,8 +60,8 @@ public class GameService {
         return firstDefinition;
     }
 
-    public Game startGame(Long userId) {
-        Game game = new Game(getRandomWord(), userId);
+    public Game startGame(Long playerId) {
+        Game game = new Game(getRandomWord(), playerId);
         return gameRepository.save(game);
     }
 
@@ -78,7 +78,7 @@ public class GameService {
         if (!game.getWord().equals(word)) {
             flag = false;
             game.endGame();
-            Player player = game.getUser();
+            Player player = game.getPlayer();
             player.addNewScore(game.getScore());
             player.incrementGamesPlayed();
             player.addWordLostTo(game.getWord());
