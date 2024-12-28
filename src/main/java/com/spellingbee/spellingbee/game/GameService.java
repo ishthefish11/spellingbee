@@ -1,4 +1,4 @@
-package game;
+package com.spellingbee.spellingbee.game;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,7 +8,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import org.json.JSONObject;
-import user.UserService;
+import com.spellingbee.spellingbee.user.UserService;
 
 @Service
 public class GameService {
@@ -31,12 +31,8 @@ public class GameService {
         String word = null;
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            if (response.statusCode() == 200) {
-                JSONObject json = new JSONObject(response.body());
-                word = json.getString("word");
-            } else {
-                System.out.println("Error retrieving random word: " + response.statusCode());
-            }
+            JSONObject json = new JSONObject(response.body());
+            word = json.getString("word");
         } catch (Exception e) {
             e.printStackTrace();
         }

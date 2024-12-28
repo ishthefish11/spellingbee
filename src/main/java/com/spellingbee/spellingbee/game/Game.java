@@ -1,10 +1,10 @@
-package game;
+package com.spellingbee.spellingbee.game;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import user.User;
+import com.spellingbee.spellingbee.user.User;
 
 @Entity
 public class Game {
