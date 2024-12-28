@@ -32,11 +32,31 @@ public class GameService {
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             JSONObject json = new JSONObject(response.body());
-            word = json.getString("word");
+            word = json.getJSONArray("word").getString(0);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return word;
+    }
+
+    public String getWordDefinition(String word) {
+        String firstDefinition = null;
+        String url = "https://api.dictionaryapi.dev/api/v2/entries/en/" + word;
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .GET()
+                .build();
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            JSONObject json = new JSONObject(response.body());
+            firstDefinition = json.getJSONArray("meanings").getJSONObject(0).getJSONArray("definitions").getJSONObject(0).getString("definition");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return firstDefinition;
     }
 
     public Game startGame(Long userId) {
