@@ -24,8 +24,13 @@ public class GameController {
         return gameService.getWordDefinition(id);
     }
 
-    @GetMapping("/play/{id}")
+    @PutMapping("/play/{id}")
     public Game advanceInGame(@PathVariable Long id) {
         return gameService.advanceInGame(id);
+    }
+
+    @DeleteMapping("/play/{id}")
+    public void deleteGame(@PathVariable Long id) {
+        gameService.deleteGame(id);
     }
 }

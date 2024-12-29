@@ -21,6 +21,10 @@ public class Player implements Serializable {
     private long lastLoginTimestamp;
     private long accountCreationTimestamp;
 
+    public Player() {
+
+    }
+
     public Player(String playername, String email) {
         this.playername = playername;
         this.email = email;

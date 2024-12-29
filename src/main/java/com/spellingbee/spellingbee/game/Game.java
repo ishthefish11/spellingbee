@@ -16,6 +16,10 @@ public class Game {
     private int score;
     private boolean active;
 
+    public Game() {
+
+    }
+
     public Game(String word, Long playerId) {
         score = 0;
         this.word = word;

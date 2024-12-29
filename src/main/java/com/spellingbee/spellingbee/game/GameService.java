@@ -1,6 +1,7 @@
 package com.spellingbee.spellingbee.game;
 
 import com.spellingbee.spellingbee.player.Player;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +52,8 @@ public class GameService {
                 .build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            JSONObject json = new JSONObject(response.body());
+            JSONArray body = new JSONArray(response.body());
+            JSONObject json = body.getJSONObject(0);
             firstDefinition = json.getJSONArray("meanings").getJSONObject(0).getJSONArray("definitions").getJSONObject(0).getString("definition");
         }
         catch (Exception e) {
@@ -85,5 +87,9 @@ public class GameService {
             player.updateHighScore(game.getScore());
         }
         return flag;
+    }
+
+    public void deleteGame(Long id) {
+        gameRepository.deleteById(id);
     }
 }
