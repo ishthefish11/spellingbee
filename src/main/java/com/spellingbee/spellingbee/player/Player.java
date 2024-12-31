@@ -76,4 +76,17 @@ public class Player implements Serializable {
     public void updateLastLoginTimestamp() {
         this.lastLoginTimestamp = System.currentTimeMillis();
     }
+
+    public String toString() {
+        return "Player{" +
+                "playername='" + playername + '\'' +
+                ", password='" + password + '\'' +
+                ", highScore=" + highScore +
+                ", wordsLostTo=" + wordsLostTo +
+                ", lastTenScores=" + lastTenScores +
+                ", totalGamesPlayed=" + totalGamesPlayed +
+                ", lastLoginTimestamp=" + lastLoginTimestamp +
+                ", accountCreationTimestamp=" + accountCreationTimestamp +
+                '}';
+    }
 }
