@@ -14,6 +14,7 @@ public class Player implements Serializable {
     private Long playerId;
     private String playername;
     private String email;
+    private String password;
     private int highScore;
     private List<String> wordsLostTo;
     private List<Integer> lastTenScores;
@@ -25,9 +26,10 @@ public class Player implements Serializable {
 
     }
 
-    public Player(String playername, String email) {
+    public Player(String playername, String email, String password) {
         this.playername = playername;
         this.email = email;
+        this.password = password;
         this.highScore = 0;
         this.wordsLostTo = new ArrayList<>();
         this.lastTenScores = new ArrayList<>();
@@ -42,6 +44,14 @@ public class Player implements Serializable {
 
     public void setPlayerName(String playerName) {
         this.playername = playername;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void updateHighScore(int newScore) {

@@ -3,12 +3,17 @@ package com.spellingbee.spellingbee.player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
+import java.util.Optional;
+
 public class PlayerService {
     @Autowired
     private PlayerRepository playerRepository;
 
     public void createPlayer(Player player) {
+        Optional<Player> existingPlayer = playerRepository.findByPlayernameOrEmail(player.getPlayerName(), player.getEmail());
+        if (existingPlayer.isPresent()) {
+            throw new RuntimeException("Username or email already exists");
+        }
         playerRepository.save(player);
     }
 
@@ -17,7 +22,7 @@ public class PlayerService {
     }
 
     public Player getPlayer(Long id) {
-        return playerRepository.findById(id).get();
+        return playerRepository.findById(id).orElseThrow(() -> new RuntimeException("Player not found"));
     }
 
     public void deletePlayer(Long id) {

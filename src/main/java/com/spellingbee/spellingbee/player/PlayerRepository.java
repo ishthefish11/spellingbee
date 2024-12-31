@@ -1,6 +1,10 @@
 package com.spellingbee.spellingbee.player;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
-public interface PlayerRepository extends CrudRepository<Player, Long> {
+import java.util.Optional;
+
+public interface PlayerRepository extends JpaRepository<Player, Long> {
+    Optional<Player> findByPlayernameOrEmail(String playername, String email);
 }
