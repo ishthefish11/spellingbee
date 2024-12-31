@@ -9,6 +9,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
+
 import org.json.JSONObject;
 import com.spellingbee.spellingbee.player.PlayerService;
 
@@ -63,6 +65,10 @@ public class GameService {
     }
 
     public Game startGame(Long playerId) {
+        Game activeGame = gameRepository.findByPlayer_PlayerIdAndActiveTrue(playerId);
+        if (activeGame != null) {
+            return activeGame;
+        }
         Game game = new Game(getRandomWord(), playerId);
         return gameRepository.save(game);
     }

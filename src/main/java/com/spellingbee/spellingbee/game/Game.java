@@ -1,10 +1,7 @@
 package com.spellingbee.spellingbee.game;
 
 import com.spellingbee.spellingbee.player.Player;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Game {
@@ -12,9 +9,11 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long GAME_SESSION_ID;
     private String word;
-    private Player player;
     private int score;
     private boolean active;
+
+    @ManyToOne
+    private Player player;
 
     public Game() {
 

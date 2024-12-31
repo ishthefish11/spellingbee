@@ -1,6 +1,6 @@
 package com.spellingbee.spellingbee.player;
 
-
+import com.spellingbee.spellingbee.game.Game;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -22,6 +22,9 @@ public class Player implements Serializable {
     private long lastLoginTimestamp;
     private long accountCreationTimestamp;
 
+    @OneToMany(mappedBy = "player")
+    private List<Game> games;
+
     public Player() {
 
     }
@@ -35,6 +38,10 @@ public class Player implements Serializable {
         this.totalGamesPlayed = 0;
         this.accountCreationTimestamp = System.currentTimeMillis();
         this.lastLoginTimestamp = System.currentTimeMillis();
+    }
+
+    public Long getPlayerId() {
+        return playerId;
     }
 
     public String getPlayerName() {

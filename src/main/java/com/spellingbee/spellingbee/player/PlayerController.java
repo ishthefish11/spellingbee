@@ -1,6 +1,8 @@
 package com.spellingbee.spellingbee.player;
 
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +18,7 @@ public class PlayerController {
     }
 
     @GetMapping("/players/{id}")
-    public Player getPlayer(@PathVariable Long id) {
+    public ResponseEntity<Player> getPlayer(@PathVariable Long id) {
         return playerService.getPlayer(id);
     }
 
@@ -30,8 +32,8 @@ public class PlayerController {
         playerService.deletePlayer(id);
     }
 
-    @PutMapping("/players/{id}")
+    @PutMapping("/players/{id}/logged-in")
     public void updateLoggedInTimestamp(@PathVariable Long id) {
-        playerService.getPlayer(id).updateLastLoginTimestamp();
+        playerService.updateLastLoginTimestamp(id);
     }
 }
