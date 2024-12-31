@@ -12,7 +12,7 @@ public class Player implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long playerId;
-    private String playername;
+    private String playerName;
     private String email;
     private String password;
     private int highScore;
@@ -29,8 +29,8 @@ public class Player implements Serializable {
 
     }
 
-    public Player(String playername, String password) {
-        this.playername = playername;
+    public Player(String playerName, String password) {
+        this.playerName = playerName;
         this.password = password;
         this.highScore = 0;
         this.wordsLostTo = new ArrayList<>();
@@ -45,11 +45,11 @@ public class Player implements Serializable {
     }
 
     public String getPlayerName() {
-        return playername;
+        return playerName;
     }
 
     public void setPlayerName(String playerName) {
-        this.playername = playername;
+        this.playerName = playerName;
     }
 
     public void updateHighScore(int newScore) {

@@ -6,16 +6,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class PlayerController {
 
     @Autowired
     private PlayerService playerService;
 
+    @GetMapping("/players")
+    public List<Player> getAllPlayers() {
+        return playerService.getAllPlayers();
+    }
     @PostMapping("/players")
     public void createPlayer(@RequestBody Player player) {
-        System.out.println("Did we make it this far?");
-        System.out.println("Player received: " + player);
         playerService.createPlayer(player);
     }
 

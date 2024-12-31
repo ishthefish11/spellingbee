@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -13,8 +15,7 @@ public class PlayerService {
     private PlayerRepository playerRepository;
 
     public ResponseEntity<Player> createPlayer(Player player) {
-        System.out.println("Alright, did it make it THIS far, though?");
-        Optional<Player> findPlayer = playerRepository.findByPlayername(player.getPlayerName());
+        Optional<Player> findPlayer = playerRepository.findByPlayerName(player.getPlayerName());
         if (findPlayer.isPresent()) {
             return new ResponseEntity<>(null, HttpStatus.CONFLICT);
         }
@@ -40,5 +41,11 @@ public class PlayerService {
 
     public void updateLastLoginTimestamp(Long id) {
         playerRepository.findById(id).get().updateLastLoginTimestamp();
+    }
+
+    public List<Player> getAllPlayers() {
+        List<Player> arr = new ArrayList<>();
+        arr.addAll(playerRepository.findAll());
+        return arr;
     }
 }

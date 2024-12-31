@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Optional;
 
 public interface PlayerRepository extends JpaRepository<Player, Long> {
-    Optional<Player> findByPlayername(String playername);
+    Optional<Player> findByPlayerName(String playerName);
 }
