@@ -13,6 +13,7 @@ public class PlayerService {
     private PlayerRepository playerRepository;
 
     public ResponseEntity<Player> createPlayer(Player player) {
+        System.out.println("Alright, did it make it THIS far, though?");
         Optional<Player> findPlayer = playerRepository.findByPlayername(player.getPlayerName());
         if (findPlayer.isPresent()) {
             return new ResponseEntity<>(null, HttpStatus.CONFLICT);
