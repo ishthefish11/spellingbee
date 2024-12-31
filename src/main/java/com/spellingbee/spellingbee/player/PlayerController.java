@@ -15,6 +15,7 @@ public class PlayerController {
     @PostMapping("/players")
     public void createPlayer(@RequestBody Player player) {
         System.out.println("Did we make it this far?");
+        System.out.println("Player received: " + player);
         playerService.createPlayer(player);
     }
 
