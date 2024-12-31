@@ -26,9 +26,8 @@ public class Player implements Serializable {
 
     }
 
-    public Player(String playername, String email, String password) {
+    public Player(String playername, String password) {
         this.playername = playername;
-        this.email = email;
         this.password = password;
         this.highScore = 0;
         this.wordsLostTo = new ArrayList<>();
@@ -44,14 +43,6 @@ public class Player implements Serializable {
 
     public void setPlayerName(String playerName) {
         this.playername = playername;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public void updateHighScore(int newScore) {

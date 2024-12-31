@@ -11,9 +11,9 @@ public class PlayerService {
     private PlayerRepository playerRepository;
 
     public void createPlayer(Player player) {
-        Optional<Player> existingPlayer = playerRepository.findByPlayernameOrEmail(player.getPlayerName(), player.getEmail());
+        Optional<Player> existingPlayer = playerRepository.findByPlayername(player.getPlayerName());
         if (existingPlayer.isPresent()) {
-            throw new RuntimeException("Username or email already exists");
+            throw new RuntimeException("Username already exists");
         }
         playerRepository.save(player);
     }
