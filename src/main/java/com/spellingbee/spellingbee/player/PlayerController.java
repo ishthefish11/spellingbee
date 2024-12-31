@@ -15,6 +15,7 @@ public class PlayerController {
     @PostMapping("/players")
     public void createPlayer(@RequestBody Player player) {
         playerService.createPlayer(player);
+        System.out.println("Did we make it this far?");
     }
 
     @GetMapping("/players/{id}")
