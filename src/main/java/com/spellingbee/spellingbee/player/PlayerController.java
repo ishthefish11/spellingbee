@@ -19,8 +19,8 @@ public class PlayerController {
         return playerService.getAllPlayers();
     }
     @PostMapping("/players")
-    public void createPlayer(@RequestBody Player player) {
-        playerService.createPlayer(player);
+    public ResponseEntity<Player> createPlayer(@RequestBody Player player) {
+        return playerService.createPlayer(player);
     }
 
     @GetMapping("/players/{id}")
