@@ -48,6 +48,14 @@ public class Player implements Serializable {
         return playerName;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
