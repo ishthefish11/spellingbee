@@ -14,15 +14,15 @@ import java.util.Optional;
 public class PlayerService {
     @Autowired
     private PlayerRepository playerRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
     public ResponseEntity<Player> createPlayer(Player player) {
         Optional<Player> findPlayer = playerRepository.findByPlayerName(player.getPlayerName());
         if (findPlayer.isPresent()) {
             return new ResponseEntity<>(null, HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>(playerRepository.save(new Player(player.getPlayerName(), passwordEncoder.encode(player.getPassword()))), HttpStatus.CREATED);
+        return new ResponseEntity<>(playerRepository.save(new Player(player.getPlayerName(), player.getPassword())), HttpStatus.CREATED);
     }
 
     public void updatePlayer(Player player) {
