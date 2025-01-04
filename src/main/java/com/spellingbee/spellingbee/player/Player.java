@@ -13,7 +13,6 @@ public class Player implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long playerId;
     private String playerName;
-    private String email;
     private String password;
     private int highScore;
     private List<String> wordsLostTo;
