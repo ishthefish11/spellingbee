@@ -1,9 +1,7 @@
 package com.spellingbee.spellingbee.player;
 
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,5 +39,12 @@ public class PlayerController {
     @PutMapping("/players/{id}/logged-in")
     public void updateLoggedInTimestamp(@PathVariable Long id) {
         playerService.updateLastLoginTimestamp(id);
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody Player player) {
+        String key = playerService.verify(player);
+        System.out.println("Key: " + key);
+        return key;
     }
 }

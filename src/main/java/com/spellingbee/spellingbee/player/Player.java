@@ -59,6 +59,21 @@ public class Player implements Serializable {
         this.playerName = playerName;
     }
 
+    public String toString() {
+        return "Player{" +
+                "playerId=" + playerId +
+                ", playerName='" + playerName + '\'' +
+                ", password='" + password + '\'' +
+                ", highScore=" + highScore +
+                ", wordsLostTo=" + wordsLostTo +
+                ", lastTenScores=" + lastTenScores +
+                ", totalGamesPlayed=" + totalGamesPlayed +
+                ", lastLoginTimestamp=" + lastLoginTimestamp +
+                ", accountCreationTimestamp=" + accountCreationTimestamp +
+                ", games=" + games +
+                '}';
+    }
+
     public void updateHighScore(int newScore) {
         if (newScore > this.highScore) {
             this.highScore = newScore;
