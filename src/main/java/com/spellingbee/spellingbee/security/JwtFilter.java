@@ -33,7 +33,7 @@ public class JwtFilter extends OncePerRequestFilter {
         if (playerName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
             UserDetails userDetails = userDetailsService.loadUserByUsername(playerName);
-            if (jwtService.validateToken(token, userDetails)) {     // add token to context and continue with next filter
+            if (jwtService.validateToken(token)) {     // add token to context and continue with next filter
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);

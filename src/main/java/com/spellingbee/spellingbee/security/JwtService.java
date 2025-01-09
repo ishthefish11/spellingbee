@@ -4,7 +4,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.KeyGenerator;
@@ -19,7 +18,7 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    private final int EXPIRATION_IN_MINS = 15;
+    private final int EXPIRATION_IN_MINS = 1440; // 1440 is 1 day
 
     private String key;
 
@@ -46,14 +45,12 @@ public class JwtService {
                 .and()
                 .signWith(getKey())
                 .compact();
-        System.out.println("TEST: generateToken method ends.");
         return e;
     }
 
 
     private SecretKey getKey() {
         byte[] keyBytes = Decoders.BASE64.decode(key);
-        System.out.println("TEST: Key successfully generated: " + Keys.hmacShaKeyFor(keyBytes));
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
@@ -67,6 +64,7 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String token) {
+
         return Jwts.parser()
                 .verifyWith(getKey())
                 .build()
@@ -74,8 +72,8 @@ public class JwtService {
                 .getPayload();
     }
 
-    public boolean validateToken(String token, UserDetails userDetails) {
-        return isTokenExpired(token);
+    public boolean validateToken(String token) {
+        return !isTokenExpired(token);
     }
 
     private boolean isTokenExpired(String token) {
