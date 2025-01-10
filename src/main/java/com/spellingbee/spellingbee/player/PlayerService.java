@@ -1,6 +1,8 @@
 package com.spellingbee.spellingbee.player;
 
 import com.spellingbee.spellingbee.security.JwtService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -68,4 +70,37 @@ public class PlayerService {
             return "fail";
         }
     }
+
+    public Player getPlayerByUsername(String playerName) {
+        return (playerRepository.findByPlayerName(playerName).isPresent()) ? playerRepository.findByPlayerName(playerName).get() : null;
+    }
+
+    public ResponseEntity<?> login(Player player, HttpServletResponse response) {
+        String token = verify(player);
+
+        if (token == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+        }
+
+        Long playerId = getPlayerByUsername(player.getPlayerName()).getPlayerId();
+
+        // add jwt token as a cookie
+        Cookie authTokenCookie = new Cookie("authToken", token);
+        authTokenCookie.setHttpOnly(true);
+        authTokenCookie.setSecure(false);
+        authTokenCookie.setPath("/");
+        authTokenCookie.setMaxAge(60 * 60 * 24); // 1 day
+        response.addCookie(authTokenCookie);
+
+        // add playerId as a cookie (eliminates need for future requests requiring an id)
+        Cookie playerIdCookie = new Cookie("playerId", String.valueOf(playerId));
+        playerIdCookie.setHttpOnly(false);
+        playerIdCookie.setSecure(false);
+        playerIdCookie.setPath("/");
+        playerIdCookie.setMaxAge(60 * 60 * 24); // 1 day
+        response.addCookie(playerIdCookie);
+
+        return ResponseEntity.ok("Login successful");
+    }
+
 }

@@ -1,9 +1,7 @@
 package com.spellingbee.spellingbee.player;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,9 +17,16 @@ public class PlayerController {
     public List<Player> getAllPlayers() {
         return playerService.getAllPlayers();
     }
+
     @PostMapping("/players")
     public ResponseEntity<Player> createPlayer(@RequestBody Player player) {
         return playerService.createPlayer(player);
+    }
+
+    @GetMapping("/players/username/{username}")
+    public ResponseEntity<Player> getPlayerByUsername(@PathVariable String username) {
+        Player player  = playerService.getPlayerByUsername(username);
+        return ResponseEntity.ok(player);
     }
 
     @GetMapping("/players/{id}")
@@ -46,21 +51,8 @@ public class PlayerController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Player player, HttpServletResponse response) {
-        String token = playerService.verify(player); // Generate/verify JWT or session token
-
-        if (token == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
-        }
-
-        // Set the token as an HttpOnly cookie
-        Cookie cookie = new Cookie("authToken", token);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(true); // Use this in production with HTTPS
-        cookie.setPath("/"); // Make cookie available across the entire domain
-        cookie.setMaxAge(60 * 60 * 24); // Set cookie expiry (1 day in this case)
-        response.addCookie(cookie);
-
-        return ResponseEntity.ok("Login successful");
+        return playerService.login(player, response);
     }
+
 
 }
