@@ -1,7 +1,9 @@
 package com.spellingbee.spellingbee.game;
 
 import com.spellingbee.spellingbee.player.Player;
+import com.spellingbee.spellingbee.player.PlayerService;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +12,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
-
-import org.json.JSONObject;
-import com.spellingbee.spellingbee.player.PlayerService;
 
 @Service
 public class GameService {
@@ -64,6 +63,10 @@ public class GameService {
         return firstDefinition;
     }
 
+    public List<Game> getAllGamesSortedByScore() {
+        return gameRepository.findAllByOrderByScoreDesc();
+    }
+
     public Game startGame(Long playerId) {
         Game activeGame = gameRepository.findByPlayer_PlayerIdAndActiveTrue(playerId);
         if (activeGame != null) {
@@ -89,8 +92,7 @@ public class GameService {
             Player player = game.getPlayer();
             player.addNewScore(game.getScore());
             player.incrementGamesPlayed();
-            player.addWordLostTo(game.getWord());
-            player.updateHighScore(game.getScore());
+            player.setHighScore(game.getScore());
         }
         return flag;
     }

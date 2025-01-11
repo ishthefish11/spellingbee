@@ -3,6 +3,8 @@ package com.spellingbee.spellingbee.game;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class GameController {
     @Autowired
@@ -32,5 +34,10 @@ public class GameController {
     @DeleteMapping("/play/{id}")
     public void deleteGame(@PathVariable Long id) {
         gameService.deleteGame(id);
+    }
+
+    @GetMapping("/games/sorted")
+    public List<Game> getAllGamesSortedByScore() {
+        return gameService.getAllGamesSortedByScore();
     }
 }

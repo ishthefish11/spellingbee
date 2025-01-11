@@ -11,6 +11,8 @@ public class Game {
     private String word;
     private int score;
     private boolean active;
+    private long gameCreatedTimestamp;
+    private long gameEndedTimestamp;
 
     @ManyToOne
     private Player player;
@@ -23,6 +25,7 @@ public class Game {
         score = 0;
         this.word = word;
         active = true;
+        gameCreatedTimestamp = System.currentTimeMillis();
     }
 
     public long getGameId() {
@@ -41,6 +44,10 @@ public class Game {
         return player;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
     public void setPlayer(Player player) {
         this.player = player;
     }
@@ -55,5 +62,6 @@ public class Game {
 
     public void endGame() {
         active = false;
+        gameEndedTimestamp = System.currentTimeMillis();
     }
 }
