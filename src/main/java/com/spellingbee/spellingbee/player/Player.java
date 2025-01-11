@@ -15,7 +15,7 @@ public class Player implements Serializable {
     private String playerName;
     private String password;
     private int highScore;
-    private List<String> wordsLostTo;
+    @ElementCollection
     private List<Integer> lastTenScores;
     private int totalGamesPlayed;
     private long lastLoginTimestamp;
@@ -32,8 +32,8 @@ public class Player implements Serializable {
         this.playerName = playerName;
         this.password = password;
         this.highScore = 0;
-        this.wordsLostTo = new ArrayList<>();
         this.lastTenScores = new ArrayList<>();
+        this.games = new ArrayList<>();
         this.totalGamesPlayed = 0;
         this.accountCreationTimestamp = System.currentTimeMillis();
         this.lastLoginTimestamp = System.currentTimeMillis();
@@ -59,13 +59,36 @@ public class Player implements Serializable {
         this.playerName = playerName;
     }
 
+    public int getHighScore() {
+        return highScore;
+    }
+
+    public List<Integer> getLastTenScores() {
+        return lastTenScores;
+    }
+
+    public int getTotalGamesPlayed() {
+        return totalGamesPlayed;
+    }
+
+    public long getLastLoginTimestamp() {
+        return lastLoginTimestamp;
+    }
+
+    public long getAccountCreationTimestamp() {
+        return accountCreationTimestamp;
+    }
+
+    public List<Game> getGames() {
+        return games;
+    }
+
     public String toString() {
         return "Player{" +
                 "playerId=" + playerId +
                 ", playerName='" + playerName + '\'' +
                 ", password='" + password + '\'' +
                 ", highScore=" + highScore +
-                ", wordsLostTo=" + wordsLostTo +
                 ", lastTenScores=" + lastTenScores +
                 ", totalGamesPlayed=" + totalGamesPlayed +
                 ", lastLoginTimestamp=" + lastLoginTimestamp +
@@ -74,14 +97,10 @@ public class Player implements Serializable {
                 '}';
     }
 
-    public void updateHighScore(int newScore) {
+    public void setHighScore(int newScore) {
         if (newScore > this.highScore) {
             this.highScore = newScore;
         }
-    }
-
-    public void addWordLostTo(String word) {
-        this.wordsLostTo.add(word);
     }
 
     public void addNewScore(int score) {
@@ -95,7 +114,7 @@ public class Player implements Serializable {
         this.totalGamesPlayed++;
     }
 
-    public void updateLastLoginTimestamp() {
+    public void setLastLoginTimestamp() {
         this.lastLoginTimestamp = System.currentTimeMillis();
     }
 

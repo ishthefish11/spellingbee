@@ -53,7 +53,7 @@ public class PlayerService {
     }
 
     public void updateLastLoginTimestamp(Long id) {
-        playerRepository.findById(id).get().updateLastLoginTimestamp();
+        playerRepository.findById(id).get().setLastLoginTimestamp();
     }
 
     public List<Player> getAllPlayers() {
