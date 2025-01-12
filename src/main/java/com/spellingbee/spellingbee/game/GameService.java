@@ -64,7 +64,7 @@ public class GameService {
     }
 
     public List<Game> getAllGamesSortedByScore() {
-        return gameRepository.findAllByOrderByScoreDesc();
+        return gameRepository.findByActiveFalseOrderByScoreDesc();
     }
 
     public Game startGame(Long playerId) {
@@ -72,7 +72,9 @@ public class GameService {
         if (activeGame != null) {
             return activeGame;
         }
-        Game game = new Game(getRandomWord(), playerId);
+        Player player = playerService.getPlayer(playerId).getBody();
+        Game game = new Game(getRandomWord(), player);
+        player.getGames().add(game);
         return gameRepository.save(game);
     }
 

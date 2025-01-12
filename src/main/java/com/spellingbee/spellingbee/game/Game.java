@@ -21,7 +21,7 @@ public class Game {
 
     }
 
-    public Game(String word, Long playerId) {
+    public Game(String word, Player player) {
         score = 0;
         this.word = word;
         active = true;

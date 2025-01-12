@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface GameRepository extends CrudRepository<Game, Long> {
     Game findByPlayer_PlayerIdAndActiveTrue(Long playerId);
-    List<Game> findAllByOrderByScoreDesc();
+    List<Game> findByActiveFalseOrderByScoreDesc();;
 }
